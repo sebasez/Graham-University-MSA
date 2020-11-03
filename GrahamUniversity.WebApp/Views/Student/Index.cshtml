@@ -35,8 +35,43 @@
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                @await Component.InvokeAsync("CreateStudent")
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function renderViewComponent() {
+        $.ajax({
+            async: true,
+            dataType: "html",
+            url: "@Url.Action("ListStudents", "Student")",
+            success: function (response) {
+                $("#listStudents").empty();
+                $("#listStudents").append(response);
+            }
+        })
+    }
+    function CrearStudent() {
+        $("#btnCrearStudent").click(function () {
+        var form = $("form")[0];
+        var data = form.serializeArray();
+        $.ajax({
+            async: true,
+            url: "@Url.Action("Create", "Student")",
+            data: data,
+            type: "POST",
+            dataType: "json",
+            success: function (data, textStatus) {
+                if (textStatus === "success") {
+                    renderViewComponent();
+                }
+            },
+            error: function (e, s) {
+                alert("Se presento un error al crear el estudiante")
+            }
+        });
+    });
+    }
+
+</script>

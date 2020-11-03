@@ -1,0 +1,11 @@
+﻿@model IEnumerable<GrahamUniversity.Core.Entities.Subject>
+
+<div class="form-group">
+    <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" required name="subjects" id="exampleFormControlSelect2">
+        @foreach (var item in Model)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
+</div>

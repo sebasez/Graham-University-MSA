@@ -18,29 +18,35 @@ namespace GrahamUniversity.Infrastructure.Repository
         {
             this.configuration = configuration;
         }
-        public Task<int> AddAsync(Student entity)
+        public async Task<int> AddAsync(Student entity)
         {
-            throw new NotImplementedException();
+            var sql = "SP_AddStudents";
+            using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                var result = await connection.QueryFirstAsync<int>(sql,new { entity.Name, entity.LastName, entity.DateEntry, entity.DocumentNumber }, commandType: System.Data.CommandType.StoredProcedure);
+                return result;
+            }
         }
 
         public async Task<IReadOnlyList<Student>> GetAllAsync()
         {
-            var sql = "select * from Student";
+            var sql = "SP_GetStudents";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<Student>(sql);
+                var result = await connection.QueryAsync<Student>(sql,commandType: System.Data.CommandType.StoredProcedure);
                 return result.ToList();
             }
         }
 
         public async Task<Student> GetByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Student WHERE Id = @Id";
+            var sql = "SP_GetStudents";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QuerySingleOrDefaultAsync<Student>(sql, new { Id = id });
+                var result = await connection.QuerySingleOrDefaultAsync<Student>(sql, new { Id = id }, commandType: System.Data.CommandType.StoredProcedure);
                 return result;
             }
         }

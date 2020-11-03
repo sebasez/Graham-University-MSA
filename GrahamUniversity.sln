@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrahamUniversity.Core", "Gr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrahamUniversity.Application", "GrahamUniversity.Models\GrahamUniversity.Application.csproj", "{71C676F1-908A-4B0B-AA8B-91630D13A0DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrahamUniversity.Infrastructure", "GrahamUniversity.Infrastructure\GrahamUniversity.Infrastructure.csproj", "{6E3C7B3F-8A8D-40A7-A0F4-CD9D25BDF115}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrahamUniversity.Infrastructure", "GrahamUniversity.Infrastructure\GrahamUniversity.Infrastructure.csproj", "{6E3C7B3F-8A8D-40A7-A0F4-CD9D25BDF115}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScriptDB", "ScriptDB", "{2D79738A-0EAC-4EB7-B01D-22B604C4A347}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Documents\script.sql = ..\..\..\Documents\script.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

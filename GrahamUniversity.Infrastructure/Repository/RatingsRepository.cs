@@ -18,9 +18,15 @@ namespace GrahamUniversity.Infrastructure.Repository
         {
             this.configuration = configuration;
         }
-        public Task<int> AddAsync(Ratings entity)
+        public async Task<int> AddAsync(Ratings entity)
         {
-            throw new NotImplementedException();
+            var sql = "SP_AddRatings";
+            using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                var result = await connection.ExecuteAsync(sql, new { Id = entity.Id, Value = entity.Rating }, commandType: System.Data.CommandType.StoredProcedure);
+                return result;
+            }
         }
 
         public Task<IReadOnlyList<Ratings>> GetAllAsync()
@@ -35,11 +41,11 @@ namespace GrahamUniversity.Infrastructure.Repository
 
         public async Task<IReadOnlyList<Ratings>> GetRatingsByStudentId(int id)
         {
-            var sql = "SELECT * FROM RATINGS R WHERE R.STUDENTID = @Id;";
+            var sql = "SP_GetRatings";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<Ratings>(sql, new { Id = id });
+                var result = await connection.QueryAsync<Ratings>(sql, new { Id = id }, commandType: System.Data.CommandType.StoredProcedure);
                 return result.ToList();
             }
         }
